@@ -1,2 +1,5 @@
 # RunningExercise3_BINP16
-Student 3 running exercise
+
+Code and other materials for student III section of REIII
+
+Oliver Todreas
