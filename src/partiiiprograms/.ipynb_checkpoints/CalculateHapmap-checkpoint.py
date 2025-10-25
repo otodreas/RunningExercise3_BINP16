@@ -1,6 +1,10 @@
-# Import libraries
+# Import libraries and set random seed
 import sys
 import os
+import random
+
+random.seed(0)
+
 
 # ------------------------------
 # User inputs and error handling
@@ -28,12 +32,16 @@ if not os.path.isfile(input_file):
     sys.exit("Input file does not exist")
 
 # Get valid chromosome names from the user
-while chromo_name not in ["mtDNA", "Y chromosome"]:
+valid_chromo_names = ["mtDNA", "Y_chromosome"]
+
+while chromo_name not in valid_chromo_names:
     chromo_name = input(
-        "Invalid chromosome name. Please enter one of the following chromosome names: 'mtDNA', 'Y chromosome', or 'abort' to exit: "
+        f"Invalid chromosome name. Please enter one of the following chromosome names: {valid_chromo_names}, or 'abort' to exit: "
     )
     if chromo_name.lower() == "abort":
         sys.exit("Program aborted.")
+if chromo_name == "Y_chromosome":
+    chromo_name = "Y chromosome"  # put space into "Y chromosome" to match dataset
 
 # Check if the location of the output file is valid.
 if "/" in output_file:
@@ -70,9 +78,12 @@ with open(input_file, "rb") as f:
         if not line_b:
             break
 
+for d in data:
+    print(d)
+
 # Check that at least one sequence was found
 if len(data) < 1:
-    sys.exit(f"Error: {chromo_name} not found. File corrupted?")
+    sys.exit(f"Error: Chromosome '{chromo_name}' not found. File corrupted?")
 
 # Get the lengths of each sequence, check that they are equal, assign it to the variable positions.
 seq_lens = []
@@ -113,29 +124,51 @@ for p in range(positions):
 
     # If more than one nucleotide were found at the position, calculate statistics.
     elif nucleotides.count(nucleotides[0]) < len(nucleotides):
-        alleles = set(nucleotides)
+        alleles = list(set(nucleotides))  # get unique nucleotides
+        # the alleles set must be converted to a sorted list to ensure reproducibility when the minor or major allele need to be selected randomly.
+        alleles.sort()
+
+        # Create blank dictionary to store frequencies in.
         freqs = {}
 
-        # Loop through
-        for a in alleles:
-            freqs[a] = nucleotides.count(a)
-        total_nucleotides += sum(freqs.values())
-        ma = max(freqs, key=freqs.get)
-        mi = min(freqs, key=freqs.get)
-        maf = freqs[mi] / sum(freqs[a] for a in alleles)
+        # Loop through alleles constructing frequency dictionary
+        for allele in alleles:
+            freqs[allele] = nucleotides.count(allele)
+
+        # Find major, minor and minor frequency of alleles.
+        # Ensure random selection if multiple major or minor alleles have the same frequency.
+        major_alleles = []
+        minor_alleles = []
+        for allele in freqs.keys():
+            if freqs[allele] == max(list(freqs.values())):
+                major_alleles.append(allele)
+            if freqs[allele] == min(list(freqs.values())):
+                minor_alleles.append(allele)
+        major_allele = random.choice(major_alleles)
+        if major_allele in minor_alleles:
+            minor_alleles.pop(
+                minor_alleles.index(major_allele)
+            )  # when all allele frequencies are equal, ensure the same allele cannot be both major and minor.
+        minor_allele = random.choice(minor_alleles)
+        minor_allele_freq = freqs[minor_allele] / sum(
+            freqs[allele] for allele in alleles
+        )
         row = (
             "\t".join(
                 [
                     chromo_name,
                     str(p),
                     "/".join(alleles),
-                    str(ma),
-                    str(mi),
-                    str(round(maf, 2)),
+                    str(major_allele),
+                    str(minor_allele),
+                    str(round(minor_allele_freq, 2)),
                 ]
             )
             + "\n"
         )
+
+        # Update total_nucleotides
+        total_nucleotides += sum(freqs.values())
 
         if not row_written:
             with open(output_file, "w") as f:
