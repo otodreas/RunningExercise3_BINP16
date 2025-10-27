@@ -29,7 +29,7 @@ Procedure:
     4. Output results
 
 Usage Example:
-    python build_similarity_matrix.py output_MSA_file_mtDNA_scores.txt mtDNA_genetic_distance
+    python build_similarity_matrix.py output_MSA_file_mtDNA_scores.txt mtDNA_genetic_distance.tsv
 """
 
 # package prepration
@@ -160,7 +160,7 @@ def main():
         gd_df.at[s2, s1] = s3
 
     # Write the matrix to the output file
-    gd_df.to_csv(output_file, sep=",")
+    gd_df.to_csv(output_file, sep="\t")
     print("Finish")
 
 
