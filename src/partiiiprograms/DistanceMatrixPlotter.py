@@ -1,5 +1,6 @@
 import sys
 import os
+import math
 import numpy as np
 from scipy.cluster.hierarchy import linkage, dendrogram
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
@@ -57,7 +58,7 @@ def tsv_array_converter(filepath):
             try:
                 data_array[i][j] = data[i+1][j+1]
             except ValueError:
-                data_array[i][j] = 50.  # this position contains "" in the input data
+                data_array[i][j] = 0.  # this position contains "" in the input data
     
     return data_array, labels
 
@@ -67,11 +68,15 @@ def custom_dendrogram(data, labels):
     Z = linkage(data)
     dendrogram(Z, orientation="left", labels=labels)
     plt.tight_layout()
-    plt.savefig("dendrogram3.png")
+    plt.savefig("dendrogram.png")
 
 def custom_heatmap(data, labels):
+    #for i in range(len(data)):
+    #    for j in range(len(data)):
+    #        if not data[i][j] <= 0:
+    #            data[i][j] = np.float64(math.log(data[i][j]))
     fig, ax = plt.subplots(figsize=(8, 8))
-    pos = ax.imshow(data)
+    pos = ax.imshow(data, cmap="hsv")
     fig.colorbar(pos)
     xticks, yticks = list(labels), list(labels)
     plt.xticks(range(len(labels)), xticks, rotation=90)
