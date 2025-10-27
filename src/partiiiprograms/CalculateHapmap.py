@@ -60,29 +60,34 @@ else:
 
 ### Load data ###
 
-# Open input file as binary
-with open(input_file, "rb") as f:
-    # Assign variables
-    chromo_line = None
-    i = 0
-    seqs = []
+def read_chromosomes(input_file, chromo_name):
+    # Open input file as binary
+    with open(input_file, "rb") as f:
+        # Assign variables
+        chromo_line = None
+        i = 0
+        seqs = []
+    
+        # Read lines to strings. Clean and append lines after chromosome header to data.
+        while True:
+            line_b = f.readline()
+            line = str(line_b)
+    
+            # The chromosome data will be on the line following the chromosome name.
+            if chromo_name in line:
+                chromo_line = i + 1
+            if i == chromo_line:
+                clean_line = line[
+                    2 : line.find("\\")
+                ]  # since files are read in binary, the first two characters will always be 'b.
+                seqs.append(clean_line)
+            i += 1
+            if not line_b:
+                break
 
-    # Read lines to strings. Clean and append lines after chromosome header to data.
-    while True:
-        line_b = f.readline()
-        line = str(line_b)
+        return seqs
 
-        # The chromosome data will be on the line following the chromosome name.
-        if chromo_name in line:
-            chromo_line = i + 1
-        if i == chromo_line:
-            clean_line = line[
-                2 : line.find("\\")
-            ]  # since files are read in binary, the first two characters will always be 'b.
-            seqs.append(clean_line)
-        i += 1
-        if not line_b:
-            break
+seqs = read_chromosomes(input_file, chromo_name)
 
 # Check that at least one sequence was found
 if len(seqs) < 3:

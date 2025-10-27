@@ -3,6 +3,7 @@ import os
 import numpy as np
 from scipy.cluster.hierarchy import linkage, dendrogram
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+from scipy.spatial.distance import squareform
 import matplotlib.pyplot as plt
 
 # ==============================
@@ -24,8 +25,13 @@ if not os.path.isfile(input_file):
     sys.exit("Input file does not exist")
 
 # Check that input_file is a .tsv file:
-#if not input_file.endswith(".tsv"):
-#    sys.exit("Input file must be a .tsv file.")
+if not input_file.endswith(".tsv"):
+    sys.exit("Input file must be a .tsv file.")
+
+
+# =============
+# Program logic
+# =============
 
 def tsv_array_converter(filepath):
     data = []
@@ -51,20 +57,28 @@ def tsv_array_converter(filepath):
             try:
                 data_array[i][j] = data[i+1][j+1]
             except ValueError:
-                data_array[i][j] = 16. # this is effectively "sensitivity"
+                data_array[i][j] = 50.  # this position contains "" in the input data
     
-    return labels, data_array
-    
+    return data_array, labels
 
-labels, data = tsv_array_converter(input_file)
+def custom_dendrogram(data, labels):
+    fig, ax = plt.subplots(figsize=(15, 4))
+    #c_data = squareform(data)
+    Z = linkage(data)
+    dendrogram(Z, orientation="left", labels=labels)
+    plt.tight_layout()
+    plt.savefig("dendrogram3.png")
 
+def custom_heatmap(data, labels):
+    fig, ax = plt.subplots(figsize=(8, 8))
+    pos = ax.imshow(data)
+    fig.colorbar(pos)
+    xticks, yticks = list(labels), list(labels)
+    plt.xticks(range(len(labels)), xticks, rotation=90)
+    plt.yticks(range(len(labels)), yticks)
+    plt.tight_layout()
+    plt.savefig("heatmap.png")
 
-Z = linkage(data)
-fig, ax = plt.subplots(figsize=(15, 4))
-dendrogram(Z, labels=labels, orientation="left")
-#plt.tight_layout()
-#plt.savefig("dendrogram.png")
-
-ConfusionMatrixDisplay(data).plot()#, display_labels = labels)
-plt.yticks(labels)
-plt.savefig("heatmap.png")
+data, labels = tsv_array_converter(input_file)
+custom_dendrogram(data, labels)
+custom_heatmap(data, labels)
