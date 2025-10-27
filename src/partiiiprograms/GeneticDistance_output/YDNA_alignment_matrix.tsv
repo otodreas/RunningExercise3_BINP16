@@ -1,0 +1,7 @@
+	Prince Fred_Y	Nicolas II Romanov_Y	Alexei Romanov_Y	Anastasia4 son_Y	Farmers grandson_Y	Grigori Rasputin_Y
+Prince Fred_Y	.	0.937	0.826	0.911	0.804	0.753
+Nicolas II Romanov_Y	0.937	.	0.0	0.858	0.542	0.542
+Alexei Romanov_Y	0.826	0.0	.	1.0	0.669	0.607
+Anastasia4 son_Y	0.911	0.858	1.0	.	0.928	0.911
+Farmers grandson_Y	0.804	0.542	0.669	0.928	.	0.064
+Grigori Rasputin_Y	0.753	0.542	0.607	0.911	0.064	.

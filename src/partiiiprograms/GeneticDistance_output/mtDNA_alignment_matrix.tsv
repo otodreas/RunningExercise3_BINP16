@@ -1,0 +1,17 @@
+	Princess Irene_mtDNA	Prince Fred_mtDNA	Nicolas II Romanov_mtDNA	Alexandra Romanov_mtDNA	Olga Romanov_mtDNA	Tatiana Romanov_mtDNA	Maria Romanov_mtDNA	Alexei Romanov_mtDNA	Suspected body of Anastasia Romanov_mtDNA	Anastasia1_mtDNA	Anastasia2_mtDNA	Anastasia3_mtDNA	Anastasia4 son_mtDNA	Anastasia5_mtDNA	Farmers grandson_mtDNA	Grigori Rasputin_mtDNA
+Princess Irene_mtDNA	.	0.103	0.81	0.103	0.142	0.324	0.0	0.179	0.358	0.504	0.453	0.333	0.378	0.425	0.504	0.944
+Prince Fred_mtDNA	0.103	.	0.907	0.206	0.0	0.0	0.151	0.333	0.418	0.567	0.302	0.529	0.432	0.425	0.378	0.944
+Nicolas II Romanov_mtDNA	0.81	0.907	.	0.85	0.0		0.81	0.756	0.907	0.648	0.378	0.944	0.907	0.971	0.378	0.486
+Alexandra Romanov_mtDNA	0.103	0.206	0.85	.	0.142	0.227	0.142	0.378	0.162	0.34	0.567	0.378	0.126	0.378	0.648	0.927
+Olga Romanov_mtDNA	0.142	0.0	0.0	0.142	.	0.0	0.252	0.405	0.436	0.378	0.283	0.661	0.453	0.378	0.378	1.0
+Tatiana Romanov_mtDNA	0.324	0.0		0.227	0.0	.	0.756	0.81	0.453	0.378	0.378	0.756	0.324		0.378	0.971
+Maria Romanov_mtDNA	0.0	0.151	0.81	0.142	0.252	0.756	.	0.0	0.378	0.604	0.412	0.262	0.405	0.486	0.523	0.933
+Alexei Romanov_mtDNA	0.179	0.333	0.756	0.378	0.405	0.81	0.0	.	0.567	0.523	0.567	0.262	0.567	0.309	0.567	0.835
+Suspected body of Anastasia Romanov_mtDNA	0.358	0.418	0.907	0.162	0.436	0.453	0.378	0.567	.	0.68	0.661	0.567	0.162	0.0	0.68	0.971
+Anastasia1_mtDNA	0.504	0.567	0.648	0.34	0.378	0.378	0.604	0.523	0.68	.	0.378	0.729	0.6	0.729	0.405	0.963
+Anastasia2_mtDNA	0.453	0.302	0.378	0.567	0.283	0.378	0.412	0.567	0.661	0.378	.	0.756	0.648	0.567	0.142	0.921
+Anastasia3_mtDNA	0.333	0.529	0.944	0.378	0.661	0.756	0.262	0.262	0.567	0.729	0.756	.	0.567	0.721	0.729	0.733
+Anastasia4 son_mtDNA	0.378	0.432	0.907	0.126	0.453	0.324	0.405	0.567	0.162	0.6	0.648	0.567	.	0.076	0.667	0.887
+Anastasia5_mtDNA	0.425	0.425	0.971	0.378	0.378		0.486	0.309	0.0	0.729	0.567	0.721	0.076	.	0.567	0.881
+Farmers grandson_mtDNA	0.504	0.378	0.378	0.648	0.378	0.378	0.523	0.567	0.68	0.405	0.142	0.729	0.667	0.567	.	0.775
+Grigori Rasputin_mtDNA	0.944	0.944	0.486	0.927	1.0	0.971	0.933	0.835	0.971	0.963	0.921	0.733	0.887	0.881	0.775	.

@@ -86,8 +86,13 @@ def custom_heatmap(data, labels):
     for i in range(len(data)):
         for j in range(len(data)):
             data[i][j] = np.float64(math.log(data[i][j] + 1))
+    
+    # unique values (delete later)
+    print("\n", "Number of pairwise comparisons in matrix: ", int(len(data.flatten()) / 2 - len(data)))
+    print("Number of unique values in matrix: ", len(np.unique(data.flatten())), "\n")
+    
     fig, ax = plt.subplots(figsize=(8, 8))
-    pos = ax.imshow(data, cmap="gist_ncar")
+    pos = ax.imshow(data)
     fig.colorbar(pos)
     xticks, yticks = list(labels), list(labels)
     plt.xticks(range(len(labels)), xticks, rotation=90)

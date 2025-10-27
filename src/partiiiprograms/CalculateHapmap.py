@@ -89,6 +89,14 @@ def read_chromosomes(input_file, chromo_name):
 
 seqs = read_chromosomes(input_file, chromo_name)
 
+# Unique values (delete later)
+unique_seqs = []
+for s in seqs:
+    if s not in unique_seqs:
+        unique_seqs.append(s)
+print("\n", "Number of sequences: ", len(seqs))
+print("Number of unique sequences: ", len(unique_seqs), "\n")
+
 # Check that at least one sequence was found
 if len(seqs) < 3:
     sys.exit(f"Error: too few (<3) chromosomes of '{chromo_name}' found. File corrupted?")
