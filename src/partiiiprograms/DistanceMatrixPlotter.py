@@ -67,16 +67,28 @@ def custom_dendrogram(data, labels):
     #c_data = squareform(data)
     Z = linkage(data)
     dendrogram(Z, orientation="left", labels=labels)
+    
+    family = np.copy(labels)
+    romanovs = np.array(["Olga", "Tatiana", "Marie", "Anastasia", "Alexandra", "Nicolas", "Romanov"])
+    for i, ind in enumerate(family):
+        for j, romanov in enumerate(romanovs):
+            if romanov in ind:
+                family[i] = "Romanov"
+                break
+            elif j == len(romanovs) - 1:
+                family[i] = "Other" # if iteration over romanovs is finished, update family
+            else:
+                pass
+    
     plt.tight_layout()
     plt.savefig("dendrogram.png")
 
 def custom_heatmap(data, labels):
-    #for i in range(len(data)):
-    #    for j in range(len(data)):
-    #        if not data[i][j] <= 0:
-    #            data[i][j] = np.float64(math.log(data[i][j]))
+    for i in range(len(data)):
+        for j in range(len(data)):
+            data[i][j] = np.float64(math.log(data[i][j] + 1))
     fig, ax = plt.subplots(figsize=(8, 8))
-    pos = ax.imshow(data, cmap="hsv")
+    pos = ax.imshow(data)#, cmap="hsv")
     fig.colorbar(pos)
     xticks, yticks = list(labels), list(labels)
     plt.xticks(range(len(labels)), xticks, rotation=90)
