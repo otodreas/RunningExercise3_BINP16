@@ -1,0 +1,70 @@
+import sys
+import os
+import numpy as np
+from scipy.cluster.hierarchy import linkage, dendrogram
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+import matplotlib.pyplot as plt
+
+# ==============================
+# User inputs and error handling
+# ==============================
+
+# Set user-assigned variables
+if len(sys.argv) < 2:
+    sys.exit("Too few arguments. Please pass an input file.")
+elif len(sys.argv) < 3:
+    input_file = sys.argv[1]
+else:
+    sys.exis(
+        "Too many arguments. Please pass at most an input file, a chromosome name, and an output file"
+    )
+
+# Check that input_file exists
+if not os.path.isfile(input_file):
+    sys.exit("Input file does not exist")
+
+# Check that input_file is a .tsv file:
+#if not input_file.endswith(".tsv"):
+#    sys.exit("Input file must be a .tsv file.")
+
+def tsv_array_converter(filepath):
+    data = []
+    with open(filepath, "r") as f:
+        while True:
+            line = f.readline()
+            row = line.strip("\n").split("\t")
+            if line:
+                data.append(row)
+            else:
+                break
+    
+    row_lengths = {len(row) for row in data}
+    if len(row_lengths) > 1 or row_lengths == {1}:
+        sys.exit(f"Delimiter issues. Rows read have length(s) {row_lengths}")
+    
+    labels = np.array(data[0][1:])
+    data_dims = len(data) - 1
+    data_array = np.zeros((data_dims, data_dims))
+    
+    for i in range(data_dims):
+        for j in range(data_dims):
+            try:
+                data_array[i][j] = data[i+1][j+1]
+            except ValueError:
+                data_array[i][j] = 16. # this is effectively "sensitivity"
+    
+    return labels, data_array
+    
+
+labels, data = tsv_array_converter(input_file)
+
+
+Z = linkage(data)
+fig, ax = plt.subplots(figsize=(15, 4))
+dendrogram(Z, labels=labels, orientation="left")
+#plt.tight_layout()
+#plt.savefig("dendrogram.png")
+
+ConfusionMatrixDisplay(data).plot()#, display_labels = labels)
+plt.yticks(labels)
+plt.savefig("heatmap.png")
