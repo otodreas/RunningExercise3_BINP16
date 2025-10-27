@@ -3,7 +3,6 @@ import os
 import math
 import numpy as np
 from scipy.cluster.hierarchy import linkage, dendrogram
-from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 from scipy.spatial.distance import squareform
 import matplotlib.pyplot as plt
 
@@ -58,7 +57,7 @@ def tsv_array_converter(filepath):
             try:
                 data_array[i][j] = data[i+1][j+1]
             except ValueError:
-                data_array[i][j] = 0.  # this position contains "" in the input data
+                data_array[i][j] = 0.01  # this position contains "" in the input data
     
     return data_array, labels
 
@@ -88,14 +87,15 @@ def custom_heatmap(data, labels):
         for j in range(len(data)):
             data[i][j] = np.float64(math.log(data[i][j] + 1))
     fig, ax = plt.subplots(figsize=(8, 8))
-    pos = ax.imshow(data)#, cmap="hsv")
+    pos = ax.imshow(data, cmap="gist_ncar")
     fig.colorbar(pos)
     xticks, yticks = list(labels), list(labels)
     plt.xticks(range(len(labels)), xticks, rotation=90)
     plt.yticks(range(len(labels)), yticks)
-    plt.tight_layout()
+    fig.tight_layout()
     plt.savefig("heatmap.png")
 
-data, labels = tsv_array_converter(input_file)
-custom_dendrogram(data, labels)
-custom_heatmap(data, labels)
+if __name__ == "__main__":
+    data, labels = tsv_array_converter(input_file)
+    custom_dendrogram(data, labels)
+    custom_heatmap(data, labels)
