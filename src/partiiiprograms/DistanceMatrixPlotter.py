@@ -103,8 +103,9 @@ class Matrix_File:
         row_lengths = {len(row) for row in data}
         if len(row_lengths) > 1 or row_lengths == {1}:
             sys.exit(f"Delimiter issues. Rows read have length(s) {row_lengths}")
+        labels = np.array(data[0][1:])        
+
         
-        labels = np.array(data[0][1:])
         data_dims = len(data) - 1
         data_array = np.zeros((data_dims, data_dims))
         
@@ -116,6 +117,21 @@ class Matrix_File:
                     data_array[i][j] = data[i+1][j+1]
                 except ValueError:
                     data_array[i][j] = 0.0  # this position contains "" in the input data
+        
+        chromosome_tag = self.get_name()[0]
+        for i, label in enumerate(labels):
+            label_terms = label.split("_")
+            while chromosome_tag not in label_terms:
+                chromosome_tag = str(input(
+                    f"The matrix row/column labels do not match the chromosome "
+                    f"tag '{self.get_name()[0]}' in the file name. From the matrix data label {label}, "
+                    f"what characters represent the chromosome name? (type abort to exit) "
+                    ))
+                if chromosome_tag.lower() == "abort":
+                    sys.exit("Program aborted.")
+            label_terms.pop(label_terms.index(chromosome_tag))
+            label_trim = "_".join(label_terms)
+            labels[i] = label_trim
         
         return data_array, labels
 
@@ -146,50 +162,12 @@ def custom_heatmap(data, labels, chromosome, metric):
     for i in range(len(data)):
         for j in range(len(data)):
             data[i][j] = np.float64(math.log(data[i][j] + 1))
-    
-    # unique values (delete later)
-    print("\n", "Number of pairwise comparisons in matrix: ", int(len(data.flatten()) / 2 - len(data)))
-    print("Number of unique values in matrix: ", len(np.unique(data.flatten())), "\n")
 
-    
-    # """
-    # Create a heatmap from a numpy array and two lists of labels.
-
-    # Parameters
-    # ----------
-    # data
-    #     A 2D numpy array of shape (M, N).
-    # row_labels
-    #     A list or array of length M with the labels for the rows.
-    # col_labels
-    #     A list or array of length N with the labels for the columns.
-    # ax
-    #     A `matplotlib.axes.Axes` instance to which the heatmap is plotted.  If
-    #     not provided, use current Axes or create a new one.  Optional.
-    # cbar_kw
-    #     A dictionary with arguments to `matplotlib.Figure.colorbar`.  Optional.
-    # cbarlabel
-    #     The label for the colorbar.  Optional.
-    # """
-        
-
-    # # Plot the heatmap
-    # im = ax.imshow(data)
-    
-    # # Create colorbar
-    # cbar = ax.figure.colorbar(im, ax)
-    # cbar.ax.set_ylabel("Log relatedness", rotation=-90, va="bottom")
-
-    # xticks, yticks = list(labels), list(labels)
-    # plt.xticks(range(len(labels)), xticks, rotation=90)
-    # plt.yticks(range(len(labels)), yticks)
-    
-    # ax.spines[:].set_visible(False)
-
-
-    fig, ax = plt.subplots(figsize=(8, 8))
-    pos = ax.imshow(data)
-    fig.colorbar(pos)
+    fig, ax = plt.subplots(figsize=(6, 6))
+    im = ax.imshow(data)
+    cbar = ax.figure.colorbar(im)#, panchor=(0., 0.))
+    cbar.ax.set_ylabel("Log relatedness", rotation=-90)
+    # fig.colorbar(pos)
     xticks, yticks = list(labels), list(labels)
     plt.xticks(range(len(labels)), xticks, rotation=90)
     plt.yticks(range(len(labels)), yticks)
