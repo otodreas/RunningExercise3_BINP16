@@ -6,6 +6,7 @@ from scipy.cluster.hierarchy import linkage, dendrogram
 from scipy.spatial.distance import squareform
 import matplotlib.pyplot as plt
 
+
 # ==============================
 # User inputs and error handling
 # ==============================
@@ -34,11 +35,10 @@ elif len(sys.argv) < 3:
 
 # multiple files were passed.
 else:
-    input_files = [""] * len(sys.argv)
-    for i in range(len(input_files)):
-        input_files[i] = sys.argv[i]
+    input_files = [""] * (len(sys.argv) - 1)
     print(input_files)
-    sys.exit()
+    for i in range(len(input_files)):
+        input_files[i] = sys.argv[i + 1]
 
 
 for f in input_files:
@@ -56,9 +56,70 @@ if len(nontsv_files) > 0:
     sys.exit(f"The following files are not tsv files: {nontsv_files}")
 
 
-# =============
-# Program logic
-# =============
+# =====================
+# Classes and functions
+# =====================
+
+# User can type "Abort" at any time and abort the program
+def abort(user_input):
+    if user_input.lower() == "abort" or user_input.lower() == "exit":
+        sys.exit("Program aborted.")
+    else:
+        return user_input
+
+
+class Matrix_File_Metadata:
+    def __init__(self, input_files):
+        self.input_files = input_files
+
+    def __str__(self):
+        return str(self.input_files)
+
+    def get_metadata(self):
+        chromosomes = []
+        metrics = []
+        for i in self.input_files:
+            if len(chromosomes) == 0:
+                chromosomes.append(
+                    abort(
+                        input(f"Please input the CHROMOSOME name in the file '{i}': ")
+                    )
+                )
+            else:
+                chromosome_already_labeled = False
+                for c in chromosomes:
+                    if c in i:
+                        chromosome_already_labeled = True
+                if chromosome_already_labeled:
+                    pass
+                else:
+                    chromosomes.append(
+                        abort(
+                            input(
+                                f"Please input the CHROMOSOME name in the file '{i}': "
+                            )
+                        )
+                    )
+
+            if len(metrics) == 0:
+                metrics.append(
+                    abort(input(f"Please input the METRIC name in the file '{i}': "))
+                )
+            else:
+                metric_already_labeled = False
+                for m in metrics:
+                    if m in i:
+                        metric_already_labeled = True
+                if metric_already_labeled:
+                    pass
+                else:
+                    metrics.append(
+                        abort(
+                            input(f"Please input the METRIC name in the file '{i}': ")
+                        )
+                    )
+
+        return (chromosomes, metrics)
 
 
 # Create object class Matrix_File
@@ -66,33 +127,28 @@ class Matrix_File:
     def __init__(self, filepath):
         self.filepath = filepath
 
-    def get_name(self):
-        # The valid chromosomes
-        chromosomes = ["mtDNA", "YDNA"]
-        chromosome = None
-        # The valid metrics
-        metrics = ["alignment", "identity"]
-        metric = None
-        for i in chromosomes:
-            if i in self.filepath.lower():
-                chromosome = i
-        for i in metrics:
-            if i in self.filepath.lower():
-                metric = i
+    def get_name(self, chromosomes, metrics):
+        chromosome = []
+        metric = []
 
-        # Check that names are valid
-        while chromosome not in chromosomes:
-            chromosome = input(
-                f"Chromosomes '{chromosomes}' not found in filename '{self.filepath}'. Please input the chromosome name in the filename or 'abort' to exit: "
+        for i in chromosomes:
+            if i in self.filepath:
+                chromosome.append(i)
+        for i in metrics:
+            if i in self.filepath:
+                metric.append(i)
+
+        if len(chromosome) + len(metric) != 2:
+            sys.exit(
+                f"File {self.filepath} does not contain exactly one chromosome and one metric name."
             )
-            if chromosome.lower() == "abort":
-                sys.exit("Program aborted.")
-        while metric not in metrics:
-            metric = input(
-                f"Metric not found. Please input a valid metric name {metrics} or 'abort' to exit: "
-            )
-            if metric.lower() == "abort":
-                sys.exit("Program aborted.")
+        else:
+            chromosome = "".join(chromosome)
+            metric = "".join(metric)
+
+        self.chromosome = chromosome
+        self.metric = metric
+
         return chromosome, metric
 
     def get_data(self):
@@ -124,21 +180,19 @@ class Matrix_File:
                     data_array[i][j] = (
                         0.0  # this position contains "" in the input data
                     )
-
-        chromosome_tag = self.get_name()[0]
+        
+        chromosome_tag = self.chromosome
         for i, label in enumerate(labels):
             label_terms = label.split("_")
             label_terms_lower = label.lower().split("_")
             while chromosome_tag not in label_terms:
                 chromosome_tag = str(
-                    input(
-                        f"The matrix row/column labels do not match the chromosome "
-                        f"tag '{chromosome_tag}' in the file name. From the matrix data label '{label}', "
-                        f"what characters represent the chromosome name? (type abort to exit) "
+                    abort(
+                        input(
+                            f"The matrix row/column labels do not match the chromosome tag '{chromosome_tag}' in the file name '{self.filepath}'. From the matrix data label '{label}', what characters represent the chromosome name? "
+                        )
                     )
                 )
-                if chromosome_tag.lower() == "abort":
-                    sys.exit("Program aborted.")
 
             label_terms.pop(label_terms.index(chromosome_tag))
             label_trim = "_".join(label_terms)
@@ -162,14 +216,14 @@ def custom_dendrogram(data, labels, chromosome, metric):
             if romanov in ind:
                 family[i] = "Romanov"
                 break
-            elif j == len(romanovs) - 1:
+            elif j < len(romanovs) - 1:
+                pass
+            else:
                 family[i] = (
                     "Other"  # if iteration over romanovs is finished, update family
                 )
-            else:
-                pass
 
-    ax.set_title(f"Relatedness dendrogram on chromosome {chromosome}. Metric: {metric}")
+    ax.set_title(f"Relatedness Dendrogram on Chromosome {chromosome}. Metric: {metric}")
     plt.tight_layout()
     plt.savefig(f"dendrogram_{chromosome}_{metric}.png")
 
@@ -187,16 +241,19 @@ def custom_heatmap(data, labels, chromosome, metric):
     xticks, yticks = list(labels), list(labels)
     plt.xticks(range(len(labels)), xticks, rotation=90)
     plt.yticks(range(len(labels)), yticks)
-    ax.set_title(f"Relatedness heatmap\nChromosome: {chromosome}\nMetric: {metric}")
+    ax.set_title(f"Log Relatedness Heatmap\nChromosome: {chromosome}\nMetric: {metric}")
     fig.tight_layout()
     plt.savefig(f"heatmap_{chromosome}_{metric}.png")
 
 
 # Run functions
 if __name__ == "__main__":
+    input_files_metadata = Matrix_File_Metadata(input_files)
+    chromosomes, metrics = input_files_metadata.get_metadata()
+    
     for input_file in input_files:
         fileobject = Matrix_File(input_file)
-        chromosome, metric = fileobject.get_name()
+        chromosome, metric = fileobject.get_name(chromosomes, metrics)
         data, labels = fileobject.get_data()
         custom_dendrogram(data, labels, chromosome, metric)
         custom_heatmap(data, labels, chromosome, metric)
