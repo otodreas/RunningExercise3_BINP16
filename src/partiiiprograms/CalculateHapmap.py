@@ -60,6 +60,7 @@ else:
 
 ### Load data ###
 
+
 def read_chromosomes(input_file, chromo_name):
     # Open input file as binary
     with open(input_file, "rb") as f:
@@ -67,12 +68,12 @@ def read_chromosomes(input_file, chromo_name):
         chromo_line = None
         i = 0
         seqs = []
-    
+
         # Read lines to strings. Clean and append lines after chromosome header to data.
         while True:
             line_b = f.readline()
             line = str(line_b)
-    
+
             # The chromosome data will be on the line following the chromosome name.
             if chromo_name in line:
                 chromo_line = i + 1
@@ -87,6 +88,7 @@ def read_chromosomes(input_file, chromo_name):
 
         return seqs
 
+
 seqs = read_chromosomes(input_file, chromo_name)
 
 # Unique values (delete later)
@@ -99,7 +101,9 @@ print("Number of unique sequences: ", len(unique_seqs), "\n")
 
 # Check that at least one sequence was found
 if len(seqs) < 3:
-    sys.exit(f"Error: too few (<3) chromosomes of '{chromo_name}' found. File corrupted?")
+    sys.exit(
+        f"Error: too few (<3) chromosomes of '{chromo_name}' found. File corrupted?"
+    )
 
 # Get the lengths of each sequence, check that they are equal, assign it to the variable positions.
 seq_lens = []
@@ -164,7 +168,7 @@ for p in range(positions):
             if freqs[allele] == min(list(freqs.values())):
                 minor_alleles.append(allele)
         major_allele = random.choice(major_alleles)
-        
+
         if major_allele in minor_alleles:
             minor_alleles.pop(
                 minor_alleles.index(major_allele)
@@ -195,7 +199,7 @@ for p in range(positions):
             with open(output_file, "w") as f:
                 header_row = "\t".join(header) + "\n" + row
                 f.write(header_row)
-                
+
                 # Print data for inspection and update row_written to avoid re-writing the header.
                 print(header_row.strip())
                 row_written = True
