@@ -321,20 +321,18 @@ def custom_dendrogram(input_files):
                 # If the label matches any entry in the array romanovs, set the label to blue.
                 if romanov.lower() in plot_label.get_text().lower():
                     plot_label.set_color("blue")
-                    print(plot_label, "blue")
                     break
                 elif k < len(romanovs) - 1:
                     pass
                 # If all romanov names have been checked, set the label to red.
                 else:
                     plot_label.set_color("red")
-                    print(plot_label, "red")
 
         # Set title of the subplot
-        ax.set_title(f"Metric: {metric}")
+        ax.set_title(f"Metric: {metric[0].upper() + metric[1:]}")
     # Set the title of the full plot and save.
     fig.suptitle(
-        f"Hierarchical Clustering of Genetic Distances (Algorithm: nearest point)\nChromosome: {chromosome}"
+        f"Hierarchical Clustering of Genetic Distances (Algorithm: Nearest Point)\nChromosome: {chromosome}"
     )
     plt.tight_layout()
     plt.savefig(f"dendrogram_{chromosome}.png")
@@ -344,7 +342,7 @@ def custom_dendrogram(input_files):
 def custom_heatmap(input_files):
     # Set subplots based on input files passed
     fig, axs = plt.subplots(
-        1, len(input_files), figsize=(10 + 5 * (len(input_files) - 1), 5)
+        1, len(input_files), figsize=(5 + 5 * (len(input_files) - 1), 5)
     )
 
     # Loop through input files, creating subplots
@@ -367,9 +365,7 @@ def custom_heatmap(input_files):
         data = np.negative(data)
         # Plot image
         im = ax.imshow(data, cmap="nipy_spectral")
-        # Create a color bar only once.
-        if i == len(input_files) - 1:
-            cbar = ax.figure.colorbar(im)
+        cbar = ax.figure.colorbar(im)
 
         # Update tick labels
         xticks, yticks = list(labels), list(labels)
@@ -377,7 +373,7 @@ def custom_heatmap(input_files):
         ax.set_yticks(range(len(labels)), yticks)
 
         # Set subtitle
-        ax.set_title(f"Metric: {metric}")
+        ax.set_title(f"Metric: {metric[0].upper() + metric[1:]}")
 
     # Set title and save
     fig.suptitle(f"Negative Genetic Distance Heatmap\nChromosome: {chromosome}")

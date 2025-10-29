@@ -23,7 +23,7 @@ elif len(sys.argv) < 5:
     if not sys.argv[3].endswith(".tsv"):
         sys.exit("The output file path must be a .tsv file.")
 else:
-    sys.exis(
+    sys.exit(
         "Too many arguments. Please pass at most an input file, a chromosome name, and an output file"
     )
 
@@ -90,14 +90,6 @@ def read_chromosomes(input_file, chromo_name):
 
 
 seqs = read_chromosomes(input_file, chromo_name)
-
-# Unique values (delete later)
-unique_seqs = []
-for s in seqs:
-    if s not in unique_seqs:
-        unique_seqs.append(s)
-print("\n", "Number of sequences: ", len(seqs))
-print("Number of unique sequences: ", len(unique_seqs), "\n")
 
 # Check that at least one sequence was found
 if len(seqs) < 3:
