@@ -76,9 +76,12 @@ class Matrix_File_Metadata:
         return str(self.input_files)
 
     def get_metadata(self):
+        # user input interface
         chromosomes = []
         metrics = []
+        # Loop through files
         for i in self.input_files:
+            # Get chromosome name if no chromosomes (force input since you cannot iterate through empty list)
             if len(chromosomes) == 0:
                 chromosomes.append(
                     abort(
@@ -87,9 +90,10 @@ class Matrix_File_Metadata:
                 )
             else:
                 chromosome_already_labeled = False
+                # Loop through chromosomes
                 for c in chromosomes:
                     if c in i:
-                        chromosome_already_labeled = True
+                        chromosome_already_labeled = True # update chromosome_already_labeled
                 if chromosome_already_labeled:
                     pass
                 else:
@@ -119,7 +123,24 @@ class Matrix_File_Metadata:
                         )
                     )
 
-        return (chromosomes, metrics)
+            # Generate dictionaries to return
+            chromo_counts = {}
+            metric_counts = {}
+            for c in chromosomes:
+                chromo_counts[c] = 0
+            for m in metrics:
+                metric_counts[m] = 0
+                
+            for i in self.input_files:
+                for c in chromosomes:
+                    if c in i:
+                        chromo_counts[c] += 1
+                for m in metrics:
+                    if m in i:
+                        metric_counts[m] += 1
+                        
+
+        return (chromo_counts, metric_counts)
 
 
 # Create object class Matrix_File
@@ -131,10 +152,10 @@ class Matrix_File:
         chromosome = []
         metric = []
 
-        for i in chromosomes:
+        for i in chromosomes.keys():
             if i in self.filepath:
                 chromosome.append(i)
-        for i in metrics:
+        for i in metrics.keys():
             if i in self.filepath:
                 metric.append(i)
 
@@ -202,33 +223,35 @@ class Matrix_File:
 
 
 def custom_dendrogram(data, labels, chromosome, metric):
+    
+    
+    
     fig, ax = plt.subplots(figsize=(10, 4))
-    # c_data = squareform(data)
-    Z = linkage(data) # TODO: handle warning thrown by empty matrix
+    c_data = squareform(data)
+    Z = linkage(c_data)
     dendrogram(Z, orientation="left", labels=labels)
 
-    family = np.copy(labels)
+    # Color labels
     romanovs = np.array(
         ["Olga", "Tatiana", "Marie", "Anastasia", "Alexandra", "Nicolas", "Romanov"]
-    ) # TODO: color code axis labels by family
-    for i, ind in enumerate(family):
+    )
+    for i, label in enumerate(labels):
         for j, romanov in enumerate(romanovs):
-            if romanov in ind:
-                family[i] = "Romanov"
+            if romanov in label:
+                ax.get_yticklabels()[i].set_color('blue')
                 break
             elif j < len(romanovs) - 1:
                 pass
             else:
-                family[i] = (
-                    "Other"  # if iteration over romanovs is finished, update family
-                )
-
+                ax.get_yticklabels()[i].set_color('red')
+    
     ax.set_title(f"Hierarchical Clustering of Genetic Distances (Nearest point algorithm)\non Chromosome {chromosome}. Metric: {metric}")
     plt.tight_layout()
     plt.savefig(f"dendrogram_{chromosome}_{metric}.png")
 
 
 def custom_heatmap(data, labels, chromosome, metric):
+    
     # for i in range(len(data)):
     #     for j in range(len(data)):
     #         data[i][j] = -1 * np.float64(math.log(data[i][j] + 1))
@@ -251,11 +274,17 @@ def custom_heatmap(data, labels, chromosome, metric):
 # Run functions
 if __name__ == "__main__":
     input_files_metadata = Matrix_File_Metadata(input_files)
-    chromosomes, metrics = input_files_metadata.get_metadata()
-    
-    for input_file in input_files:
-        fileobject = Matrix_File(input_file)
-        chromosome, metric = fileobject.get_name(chromosomes, metrics)
-        data, labels = fileobject.get_data()
-        custom_dendrogram(data, labels, chromosome, metric)
-        custom_heatmap(data, labels, chromosome, metric)
+    chromo_counts, metric_counts = input_files_metadata.get_metadata()
+
+    for chromosome in chromo_counts.keys():
+        chromo_input_files = []
+        for input_file in input_files:
+            if chromosome in input_file:
+                chromo_input_files.append(input_file)
+        for input_file in chromo_input_files:
+            fileobject = Matrix_File(input_file)
+            chromosome, metric = fileobject.get_name(chromo_counts, metric_counts)
+            data, labels = fileobject.get_data()
+            
+            custom_dendrogram(data, labels, chromosome, metric)  # TODO: plot multiple dendrograms for the same chromosome
+            custom_heatmap(data, labels, chromosome, metric)
