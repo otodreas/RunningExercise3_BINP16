@@ -204,13 +204,13 @@ class Matrix_File:
 def custom_dendrogram(data, labels, chromosome, metric):
     fig, ax = plt.subplots(figsize=(10, 4))
     # c_data = squareform(data)
-    Z = linkage(data)
+    Z = linkage(data) # TODO: handle warning thrown by empty matrix
     dendrogram(Z, orientation="left", labels=labels)
 
     family = np.copy(labels)
     romanovs = np.array(
         ["Olga", "Tatiana", "Marie", "Anastasia", "Alexandra", "Nicolas", "Romanov"]
-    )
+    ) # TODO: color code axis labels by family
     for i, ind in enumerate(family):
         for j, romanov in enumerate(romanovs):
             if romanov in ind:
@@ -223,25 +223,27 @@ def custom_dendrogram(data, labels, chromosome, metric):
                     "Other"  # if iteration over romanovs is finished, update family
                 )
 
-    ax.set_title(f"Relatedness Dendrogram on Chromosome {chromosome}. Metric: {metric}")
+    ax.set_title(f"Hierarchical Clustering of Genetic Distances (Nearest point algorithm)\non Chromosome {chromosome}. Metric: {metric}")
     plt.tight_layout()
     plt.savefig(f"dendrogram_{chromosome}_{metric}.png")
 
 
 def custom_heatmap(data, labels, chromosome, metric):
-    for i in range(len(data)):
-        for j in range(len(data)):
-            data[i][j] = np.float64(math.log(data[i][j] + 1))
+    # for i in range(len(data)):
+    #     for j in range(len(data)):
+    #         data[i][j] = -1 * np.float64(math.log(data[i][j] + 1))
+    data = np.negative(data)
 
     fig, ax = plt.subplots(figsize=(6, 6))
-    im = ax.imshow(data)
+    im = ax.imshow(data, cmap="nipy_spectral")
     cbar = ax.figure.colorbar(im)  # , panchor=(0., 0.))
+    # TODO: line up axes and color bar, flip colorbar (low priority)
     # cbar.ax.set_ylabel("Log relatedness", rotation=-90)
     # fig.colorbar(pos)
     xticks, yticks = list(labels), list(labels)
     plt.xticks(range(len(labels)), xticks, rotation=90)
     plt.yticks(range(len(labels)), yticks)
-    ax.set_title(f"Log Relatedness Heatmap\nChromosome: {chromosome}\nMetric: {metric}")
+    ax.set_title(f"Negative Genetic Distance Heatmap\nChromosome: {chromosome}\nMetric: {metric}")
     fig.tight_layout()
     plt.savefig(f"heatmap_{chromosome}_{metric}.png")
 
