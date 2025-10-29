@@ -92,25 +92,26 @@ class Matrix_File_Metadata:
         
         # Loop through files.
         for input_file in self.input_files:
+            # Loop through chromosomes and metrics
             for j, tags in enumerate(metadata):
-                # Get chromosome name if no chromosomes (force input since you cannot iterate through empty list)
+                # Get tag name from user if none have been passed (force input since you cannot iterate through empty list)
                 if len(tags) == 0:
                     tags.append(
                         abort(
                             input(f"Please input the {metadata_input_tags[j]} name in the file '{input_file}': ")
                         )
                     )
-                # If chsomosomes contains at least 1 entry:
+                # If tags list contains at least 1 entry:
                 else:
                     tag_already_labeled = False
-                    # Loop through chromosomes
+                    # Loop through tags
                     for tag in tags:
-                        # If chromosome is already represented in input file i, update chromosome_already_labeled
+                        # If tag is already represented in input file, update tag_already_labeled
                         if tag in input_file:
                             tag_already_labeled = True
                     if tag_already_labeled:
                         pass
-                    # Prompt user to input chromosome if the list of chromosomes is not 
+                    # Prompt user to input tag if it is not represented in list of tags 
                     else:
                         tags.append(
                             abort(
@@ -123,43 +124,58 @@ class Matrix_File_Metadata:
             # Generate dictionaries to return
             chromo_counts = {}
             metric_counts = {}
+
+            # Loop through chromosomes and metrics, initializing dictionaries with 0
             for c in chromosomes:
                 chromo_counts[c] = 0
             for m in metrics:
                 metric_counts[m] = 0
 
-            for i in self.input_files:
+            # Loop through input files and get the number of occurrences of metadata
+            for input_file in self.input_files:
                 for c in chromosomes:
-                    if c in i:
+                    if c in input_file:
                         chromo_counts[c] += 1
                 for m in metrics:
-                    if m in i:
+                    if m in input_file:
                         metric_counts[m] += 1
-
+                        
         return (chromo_counts, metric_counts)
 
 
-# Create object class Matrix_File
+# Create object class Matrix_File for each file.
 class Matrix_File:
     def __init__(self, filepath):
         self.filepath = filepath
 
+    # Get the chromosome and metric for each file
     def get_name(self, chromosomes, metrics):
+
+        """
+        Get the chromosome and metric names for a Matrix_File
+        given the dictionaries 'chromosomes' and 'metrics' containing
+        counts of each category of metadata in a Matrix_File_Metadata
+        object.
+        """
+        
         chromosome = []
         metric = []
 
-        for i in chromosomes.keys():
-            if i in self.filepath:
-                chromosome.append(i)
-        for i in metrics.keys():
-            if i in self.filepath:
-                metric.append(i)
+        # Loop through dictionary keys and grab the correct key
+        for c in chromosomes.keys():
+            if c in self.filepath:
+                chromosome.append(c)
+        for m in metrics.keys():
+            if m in self.filepath:
+                metric.append(m)
 
+        # Check that the file contains exactly one entry of each metadata type. 
         if len(chromosome) + len(metric) != 2:
             sys.exit(
                 f"File {self.filepath} does not contain exactly one chromosome and one metric name."
             )
         else:
+            # Convert metadata from list to string if it passes the check above.
             chromosome = "".join(chromosome)
             metric = "".join(metric)
 
@@ -169,6 +185,12 @@ class Matrix_File:
         return chromosome, metric
 
     def get_data(self):
+
+        """
+        Extract numerical and categorical data from .tsv file of type Matrix_File.
+        Return data in separate numpy arrays. Replace missing numerical values with 0.
+        """
+        # Open filepath associated with object and store lines in list data
         data = []
         with open(self.filepath, "r") as f:
             while True:
@@ -179,6 +201,7 @@ class Matrix_File:
                 else:
                     break
 
+        # 
         row_lengths = {len(row) for row in data}
         if len(row_lengths) > 1 or row_lengths == {1}:
             sys.exit(f"Delimiter issues. Rows read have length(s) {row_lengths}")
