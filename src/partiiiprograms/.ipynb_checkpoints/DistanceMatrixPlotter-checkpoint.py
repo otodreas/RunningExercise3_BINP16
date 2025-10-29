@@ -36,7 +36,6 @@ elif len(sys.argv) < 3:
 # multiple files were passed.
 else:
     input_files = [""] * (len(sys.argv) - 1)
-    print(input_files)
     for i in range(len(input_files)):
         input_files[i] = sys.argv[i + 1]
 
@@ -222,53 +221,72 @@ class Matrix_File:
         return data_array, labels
 
 
-def custom_dendrogram(data, labels, chromosome, metric):
+def custom_dendrogram(input_files):
     
+    fig, axs = plt.subplots(1, len(input_files), figsize=(10 + 5 * (len(input_files) - 1), 5))
+    orientations = ["left", "right"]
+    orientation_flipper = 0
+    for i, input_file in enumerate(input_files):
+        ax = axs[i] if len(input_files) > 1 else axs
+        
+        fileobject = Matrix_File(input_file)
+        chromosome, metric = fileobject.get_name(chromo_counts, metric_counts)
+        data, labels = fileobject.get_data()
+        
+        c_data = squareform(data)
+        Z = linkage(c_data)
+        dendrogram(Z, orientation=orientations[orientation_flipper], labels=labels, ax=ax)
+        orientation_flipper = not orientation_flipper
     
-    
-    fig, ax = plt.subplots(figsize=(10, 4))
-    c_data = squareform(data)
-    Z = linkage(c_data)
-    dendrogram(Z, orientation="left", labels=labels)
-
-    # Color labels
-    romanovs = np.array(
-        ["Olga", "Tatiana", "Marie", "Anastasia", "Alexandra", "Nicolas", "Romanov"]
-    )
-    for i, label in enumerate(labels):
-        for j, romanov in enumerate(romanovs):
-            if romanov in label:
-                ax.get_yticklabels()[i].set_color('blue')
-                break
-            elif j < len(romanovs) - 1:
-                pass
-            else:
-                ax.get_yticklabels()[i].set_color('red')
-    
-    ax.set_title(f"Hierarchical Clustering of Genetic Distances (Nearest point algorithm)\non Chromosome {chromosome}. Metric: {metric}")
+        # Color labels
+        romanovs = np.array(
+            ["Olga", "Tatiana", "Marie", "Anastasia", "Alexandra", "Nicolas", "Romanov"]
+        )
+        for j, plot_label in enumerate(ax.get_yticklabels()):
+            for k, romanov in enumerate(romanovs):
+                if romanov in plot_label.get_text():
+                    plot_label.set_color('blue')
+                    print(plot_label, "blue")
+                    break
+                elif k < len(romanovs) - 1:
+                    pass
+                else:
+                    plot_label.set_color('red')
+                    print(plot_label, "red")
+        
+        ax.set_title(f"Metric: {metric}")
+    fig.suptitle(f"Hierarchical Clustering of Genetic Distances (Algorithm: nearest point)\nChromosome: {chromosome}")
     plt.tight_layout()
-    plt.savefig(f"dendrogram_{chromosome}_{metric}.png")
+    plt.savefig(f"dendrogram_{chromosome}.png")
 
 
-def custom_heatmap(data, labels, chromosome, metric):
+def custom_heatmap(input_files):
     
-    # for i in range(len(data)):
-    #     for j in range(len(data)):
-    #         data[i][j] = -1 * np.float64(math.log(data[i][j] + 1))
-    data = np.negative(data)
 
-    fig, ax = plt.subplots(figsize=(6, 6))
-    im = ax.imshow(data, cmap="nipy_spectral")
-    cbar = ax.figure.colorbar(im)  # , panchor=(0., 0.))
-    # TODO: line up axes and color bar, flip colorbar (low priority)
-    # cbar.ax.set_ylabel("Log relatedness", rotation=-90)
-    # fig.colorbar(pos)
-    xticks, yticks = list(labels), list(labels)
-    plt.xticks(range(len(labels)), xticks, rotation=90)
-    plt.yticks(range(len(labels)), yticks)
-    ax.set_title(f"Negative Genetic Distance Heatmap\nChromosome: {chromosome}\nMetric: {metric}")
+    fig, axs = plt.subplots(1, len(input_files), figsize=(10 + 5 * (len(input_files) - 1), 5))
+    for i, input_file in enumerate(input_files):
+        ax = axs[i] if len(input_files) > 1 else axs
+
+        fileobject = Matrix_File(input_file)
+        chromosome, metric = fileobject.get_name(chromo_counts, metric_counts)
+        data, labels = fileobject.get_data()
+
+        max_char_len = 18
+        for j, label in enumerate(labels):
+            if len(label) > max_char_len:
+                labels[j] = "".join(["...", label[len(label) - max_char_len: ]])
+    
+        data = np.negative(data)
+        im = ax.imshow(data, cmap="nipy_spectral")
+        if i == len(input_files) - 1:
+            cbar = ax.figure.colorbar(im)
+        xticks, yticks = list(labels), list(labels)
+        ax.set_xticks(range(len(labels)), xticks, rotation=90)
+        ax.set_yticks(range(len(labels)), yticks)
+        ax.set_title(f"Metric: {metric}")
+    fig.suptitle(f"Negative Genetic Distance Heatmap\nChromosome: {chromosome}")
     fig.tight_layout()
-    plt.savefig(f"heatmap_{chromosome}_{metric}.png")
+    plt.savefig(f"heatmap_{chromosome}.png")
 
 
 # Run functions
@@ -281,10 +299,6 @@ if __name__ == "__main__":
         for input_file in input_files:
             if chromosome in input_file:
                 chromo_input_files.append(input_file)
-        for input_file in chromo_input_files:
-            fileobject = Matrix_File(input_file)
-            chromosome, metric = fileobject.get_name(chromo_counts, metric_counts)
-            data, labels = fileobject.get_data()
-            
-            custom_dendrogram(data, labels, chromosome, metric)  # TODO: plot multiple dendrograms for the same chromosome
-            custom_heatmap(data, labels, chromosome, metric)
+
+        custom_dendrogram(chromo_input_files)
+        custom_heatmap(chromo_input_files)
