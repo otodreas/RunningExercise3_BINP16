@@ -77,7 +77,7 @@ def abort(user_input):
 
 
 # Class for list of input files.
-class Matrix_File_Metadata:
+class Matrix_Files_Metadata:
     def __init__(self, input_files):
         self.input_files = input_files
 
@@ -388,7 +388,7 @@ def custom_heatmap(input_files):
 # Run functions
 if __name__ == "__main__":
     # Get metadata
-    input_files_metadata = Matrix_File_Metadata(input_files)
+    input_files_metadata = Matrix_Files_Metadata(input_files)
     chromo_counts, metric_counts = input_files_metadata.get_metadata()
 
     # Loop through chromosomes, plotting data that share chromosomes
