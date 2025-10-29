@@ -1,3 +1,4 @@
+# Import libraries
 import sys
 import os
 import math
@@ -15,31 +16,34 @@ import matplotlib.pyplot as plt
 if len(sys.argv) > 5:
     sys.exis("Too many arguments. Please pass at most four input files.")
 
+# One argument passed:
 elif len(sys.argv) < 3:
-    # check if the sole argument is a directory
+    # Check if the sole argument is a directory.
     if os.path.isdir(sys.argv[1]):
+        # Get .tsv files
         tsv_files = [f for f in os.listdir(sys.argv[1]) if f.endswith(".tsv")]
-        # check that it contains no more than 4 files
+        
+        # Check that the directory contains no more than 4 .tsv files.
         if len(tsv_files) <= 4:
-            # create empty list input_files to store filepaths in
+            # Create empty list input_files to store filepaths in.
             input_files = [""] * len(tsv_files)
 
-            # loop through filepaths in the directory passed and add them to input_files
+            # Loop through the filepaths in the directory passed and add them to input_files
             for i, f in enumerate(tsv_files):
                 input_files[i] = os.path.join(sys.argv[1], f)
         else:
             sys.exit(f"Too many files in {sys.argv[1]}")
-    # one file was passed to the program
+    # One file was passed to the program:
     else:
         input_files = [sys.argv[1]]
 
-# multiple files were passed.
+# Multiple files were passed:
 else:
     input_files = [""] * (len(sys.argv) - 1)
     for i in range(len(input_files)):
         input_files[i] = sys.argv[i + 1]
 
-
+# Loop through input_files and check for invalid files.
 for f in input_files:
     nonexistent_files = []
     nontsv_files = []
@@ -49,8 +53,10 @@ for f in input_files:
     # Check that input_file is a .tsv file:
     if not f.endswith(".tsv"):
         nontsv_files.append(f)
+
+# Print errors.
 if len(nonexistent_files) > 0:
-    sys.exit(f"The following files do not exist: {nonexistent_files}")
+    sys.exit(f"The following files do not exist or are directories: {nonexistent_files}")
 if len(nontsv_files) > 0:
     sys.exit(f"The following files are not tsv files: {nontsv_files}")
 
@@ -59,68 +65,60 @@ if len(nontsv_files) > 0:
 # Classes and functions
 # =====================
 
-# User can type "Abort" at any time and abort the program
+# User can type "Abort" at any time and abort the program.
 def abort(user_input):
     if user_input.lower() == "abort" or user_input.lower() == "exit":
         sys.exit("Program aborted.")
     else:
         return user_input
 
-
+# Class for list of input files.
 class Matrix_File_Metadata:
     def __init__(self, input_files):
         self.input_files = input_files
 
+    # When printing, return input_files
     def __str__(self):
         return str(self.input_files)
 
+    # Getting metadata (chromosome counts, metric counts)
     def get_metadata(self):
+        
         # user input interface
         chromosomes = []
         metrics = []
-        # Loop through files
-        for i in self.input_files:
-            # Get chromosome name if no chromosomes (force input since you cannot iterate through empty list)
-            if len(chromosomes) == 0:
-                chromosomes.append(
-                    abort(
-                        input(f"Please input the CHROMOSOME name in the file '{i}': ")
-                    )
-                )
-            else:
-                chromosome_already_labeled = False
-                # Loop through chromosomes
-                for c in chromosomes:
-                    if c in i:
-                        chromosome_already_labeled = True # update chromosome_already_labeled
-                if chromosome_already_labeled:
-                    pass
-                else:
-                    chromosomes.append(
+        metadata = [chromosomes, metrics]
+        metadata_input_tags = ["CHROMOSOME", "METRIC"]
+        
+        # Loop through files.
+        for input_file in self.input_files:
+            for j, tags in enumerate(metadata):
+                # Get chromosome name if no chromosomes (force input since you cannot iterate through empty list)
+                if len(tags) == 0:
+                    tags.append(
                         abort(
-                            input(
-                                f"Please input the CHROMOSOME name in the file '{i}': "
+                            input(f"Please input the {metadata_input_tags[j]} name in the file '{input_file}': ")
+                        )
+                    )
+                # If chsomosomes contains at least 1 entry:
+                else:
+                    tag_already_labeled = False
+                    # Loop through chromosomes
+                    for tag in tags:
+                        # If chromosome is already represented in input file i, update chromosome_already_labeled
+                        if tag in input_file:
+                            tag_already_labeled = True
+                    if tag_already_labeled:
+                        pass
+                    # Prompt user to input chromosome if the list of chromosomes is not 
+                    else:
+                        tags.append(
+                            abort(
+                                input(
+                                    f"Please input the {metadata_input_tags[j]} name in the file '{input_file}': "
+                                )
                             )
                         )
-                    )
-
-            if len(metrics) == 0:
-                metrics.append(
-                    abort(input(f"Please input the METRIC name in the file '{i}': "))
-                )
-            else:
-                metric_already_labeled = False
-                for m in metrics:
-                    if m in i:
-                        metric_already_labeled = True
-                if metric_already_labeled:
-                    pass
-                else:
-                    metrics.append(
-                        abort(
-                            input(f"Please input the METRIC name in the file '{i}': ")
-                        )
-                    )
 
             # Generate dictionaries to return
             chromo_counts = {}
@@ -129,7 +127,7 @@ class Matrix_File_Metadata:
                 chromo_counts[c] = 0
             for m in metrics:
                 metric_counts[m] = 0
-                
+
             for i in self.input_files:
                 for c in chromosomes:
                     if c in i:
@@ -137,7 +135,6 @@ class Matrix_File_Metadata:
                 for m in metrics:
                     if m in i:
                         metric_counts[m] += 1
-                        
 
         return (chromo_counts, metric_counts)
 
@@ -200,7 +197,7 @@ class Matrix_File:
                     data_array[i][j] = (
                         0.0  # this position contains "" in the input data
                     )
-        
+
         chromosome_tag = self.chromosome
         for i, label in enumerate(labels):
             label_terms = label.split("_")
@@ -222,22 +219,25 @@ class Matrix_File:
 
 
 def custom_dendrogram(input_files):
-    
-    fig, axs = plt.subplots(1, len(input_files), figsize=(10 + 5 * (len(input_files) - 1), 5))
+    fig, axs = plt.subplots(
+        1, len(input_files), figsize=(10 + 5 * (len(input_files) - 1), 5)
+    )
     orientations = ["left", "right"]
     orientation_flipper = 0
     for i, input_file in enumerate(input_files):
         ax = axs[i] if len(input_files) > 1 else axs
-        
+
         fileobject = Matrix_File(input_file)
         chromosome, metric = fileobject.get_name(chromo_counts, metric_counts)
         data, labels = fileobject.get_data()
-        
+
         c_data = squareform(data)
         Z = linkage(c_data)
-        dendrogram(Z, orientation=orientations[orientation_flipper], labels=labels, ax=ax)
+        dendrogram(
+            Z, orientation=orientations[orientation_flipper], labels=labels, ax=ax
+        )
         orientation_flipper = not orientation_flipper
-    
+
         # Color labels
         romanovs = np.array(
             ["Olga", "Tatiana", "Marie", "Anastasia", "Alexandra", "Nicolas", "Romanov"]
@@ -245,25 +245,27 @@ def custom_dendrogram(input_files):
         for j, plot_label in enumerate(ax.get_yticklabels()):
             for k, romanov in enumerate(romanovs):
                 if romanov in plot_label.get_text():
-                    plot_label.set_color('blue')
+                    plot_label.set_color("blue")
                     print(plot_label, "blue")
                     break
                 elif k < len(romanovs) - 1:
                     pass
                 else:
-                    plot_label.set_color('red')
+                    plot_label.set_color("red")
                     print(plot_label, "red")
-        
+
         ax.set_title(f"Metric: {metric}")
-    fig.suptitle(f"Hierarchical Clustering of Genetic Distances (Algorithm: nearest point)\nChromosome: {chromosome}")
+    fig.suptitle(
+        f"Hierarchical Clustering of Genetic Distances (Algorithm: nearest point)\nChromosome: {chromosome}"
+    )
     plt.tight_layout()
     plt.savefig(f"dendrogram_{chromosome}.png")
 
 
 def custom_heatmap(input_files):
-    
-
-    fig, axs = plt.subplots(1, len(input_files), figsize=(10 + 5 * (len(input_files) - 1), 5))
+    fig, axs = plt.subplots(
+        1, len(input_files), figsize=(10 + 5 * (len(input_files) - 1), 5)
+    )
     for i, input_file in enumerate(input_files):
         ax = axs[i] if len(input_files) > 1 else axs
 
@@ -274,8 +276,8 @@ def custom_heatmap(input_files):
         max_char_len = 18
         for j, label in enumerate(labels):
             if len(label) > max_char_len:
-                labels[j] = "".join(["...", label[len(label) - max_char_len: ]])
-    
+                labels[j] = "".join(["...", label[len(label) - max_char_len :]])
+
         data = np.negative(data)
         im = ax.imshow(data, cmap="nipy_spectral")
         if i == len(input_files) - 1:
