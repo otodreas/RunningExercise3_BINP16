@@ -1,3 +1,48 @@
+#!/usr/bin/env python3
+"""
+CalculateHapmap.py
+
+Description: This command line program will output a hapmap in .tsv format
+given an input file containing an MSA for a particular chromosome's sequences.
+The input file format is as follows:
+
+    chromsome ID
+    sequence 1
+    .
+    .
+    .
+    chromosome ID 
+    sequence n
+    
+User-defined functions:
+    read_chromosomes: take an input file and the desired chromosome name and
+return a nested list of the sequences.
+
+Non-standard modules: none.
+
+Procedure:
+    1: Import libraries
+    2: Gather user inputs from the command line
+    3: Define user-defined functions
+    4: Run program, iterating through positions and calculating allele
+frequencies, generating plots.
+
+The program addresses the following potential errors:
+    Improper argument passing
+    Uneven sequence lengths
+    Too few chromosomes in input file
+    Poor data quality (fewer than 25% of positions contain valid nucleotides)
+
+Input: input file, chromosome, output file (optional)
+
+Usage: ./CalculateHapmap.py input_file.txt, chromosome, output_file.tsv
+
+Version 1.0
+Date: 2025-10-30
+Name: Oliver Todreas
+"""
+
+
 # Import libraries and set random seed
 import sys
 import os
@@ -23,7 +68,7 @@ elif len(sys.argv) < 5:
     if not sys.argv[3].endswith(".tsv"):
         sys.exit("The output file path must be a .tsv file.")
 else:
-    sys.exis(
+    sys.exit(
         "Too many arguments. Please pass at most an input file, a chromosome name, and an output file"
     )
 
@@ -60,19 +105,24 @@ else:
 
 ### Load data ###
 
+
 def read_chromosomes(input_file, chromo_name):
+    """
+    Read chromosomes from the input file corresponding with chromo_name and
+    return a nested list of data.
+    """
     # Open input file as binary
     with open(input_file, "rb") as f:
         # Assign variables
         chromo_line = None
         i = 0
         seqs = []
-    
+
         # Read lines to strings. Clean and append lines after chromosome header to data.
         while True:
             line_b = f.readline()
             line = str(line_b)
-    
+
             # The chromosome data will be on the line following the chromosome name.
             if chromo_name in line:
                 chromo_line = i + 1
@@ -87,19 +137,14 @@ def read_chromosomes(input_file, chromo_name):
 
         return seqs
 
-seqs = read_chromosomes(input_file, chromo_name)
 
-# Unique values (delete later)
-unique_seqs = []
-for s in seqs:
-    if s not in unique_seqs:
-        unique_seqs.append(s)
-print("\n", "Number of sequences: ", len(seqs))
-print("Number of unique sequences: ", len(unique_seqs), "\n")
+seqs = read_chromosomes(input_file, chromo_name)
 
 # Check that at least one sequence was found
 if len(seqs) < 3:
-    sys.exit(f"Error: too few (<3) chromosomes of '{chromo_name}' found. File corrupted?")
+    sys.exit(
+        f"Error: too few (<3) chromosomes of '{chromo_name}' found. File corrupted?"
+    )
 
 # Get the lengths of each sequence, check that they are equal, assign it to the variable positions.
 seq_lens = []
@@ -164,7 +209,7 @@ for p in range(positions):
             if freqs[allele] == min(list(freqs.values())):
                 minor_alleles.append(allele)
         major_allele = random.choice(major_alleles)
-        
+
         if major_allele in minor_alleles:
             minor_alleles.pop(
                 minor_alleles.index(major_allele)
@@ -195,7 +240,7 @@ for p in range(positions):
             with open(output_file, "w") as f:
                 header_row = "\t".join(header) + "\n" + row
                 f.write(header_row)
-                
+
                 # Print data for inspection and update row_written to avoid re-writing the header.
                 print(header_row.strip())
                 row_written = True

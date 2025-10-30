@@ -1,3 +1,65 @@
+#!/usr/bin/env python3
+"""
+PlotDistMatrices.py
+
+Description: This command line program will output dendrograms and heatmaps
+from a set of identity matrices.
+
+User-defined functions:
+    abort: takes a string, checks if it matches "abort" or "exit" and exits the
+program. If not, returns the string.
+    custom_dendrogram: Take Matrix_File data and produce a dendrogram for each
+chromosome with subplots for each metric
+    custom_heatmap: Take Matrix_File data and produce a heatmap for each
+chromosome with subplots for each metric
+
+
+User-defined classes:
+    Matrix_Files_Metadata: takes a list of filepaths to identity matrices.
+    Non-dunder methods:
+        get_metadata: extract metadata (chromosomes, metrics) and the count of
+    each type of metadata in Matrix_Files_Metadata by prompting the user.
+    Return data in the form of dictionaries.
+
+    Matrix_File: takes a filepath to an identity matrix and extracts data.
+    Non-dunder methods:
+        get_name: get the chromosome and metric name for a given Matrix_File
+    using the dictionaries from Matrix_Files_Metadata and ensure that the file
+    has one chromosome and one metric.
+        get_data: get the data from the Matrix_File. Return two numpy arrays,
+    one with the data labels and one with numerical values. Perform checks on
+    the data.
+        
+        
+
+Non-standard modules: numpy, scipy, matplotlib.
+
+Procedure:
+    1: Import libraries
+    2: Gather user inputs from the command line
+    3: Define user-defined functions and classes
+    4: Run program, iterating through inputs and generating plots
+
+The program addresses the following potential errors:
+    1-4 files must be passed to the program. Passing a directory is OK as long
+as it contains the correct number of files.
+    Each Matrix_File must contain exactly one chromosome and one metric tag in
+its filename. 
+    The identity matrix in a Matrix_File must be read top left to bottom right.
+Label names must be consistent in both dimensions and numerical data must pass
+various checks.
+    
+
+Input: input file(s) or input directory
+
+Usage: ./PlotDistMatrices.py input_file_1.tsv ... input_file_n.tsv OR input_files_dir/
+
+Version 1.0
+Date: 2025-10-30
+Name: Oliver Todreas
+"""
+
+
 # Import libraries
 import sys
 import os
@@ -78,6 +140,11 @@ def abort(user_input):
 
 # Class for list of input files.
 class Matrix_Files_Metadata:
+    """
+    The Matrix_Files_Metadata class is for the list of files passed. Its methods
+    include get_metadata, which gets the counts of chromosome and metric in the
+    list of files passed and returns them as dictionaries.
+    """
     def __init__(self, input_files):
         self.input_files = input_files
 
@@ -150,6 +217,10 @@ class Matrix_Files_Metadata:
 
 # Create object class Matrix_File for each file.
 class Matrix_File:
+    """
+    The class Matrix_File is for individual matrix files. With just the
+    filepath, the data can be extracted to be passed to the plotting functions.
+    """
     def __init__(self, filepath):
         self.filepath = filepath
 
@@ -384,7 +455,7 @@ def custom_heatmap(input_files):
 # =============
 # Program logic
 # =============
-    
+
 # Run functions
 if __name__ == "__main__":
     # Get metadata

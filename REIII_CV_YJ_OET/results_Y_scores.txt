@@ -1,0 +1,16 @@
+SampleA | SampleB | Comparable nucleotides | uncertain nucleotides | Total nucleotides | IdentityScore | Score
+Prince Fred_Y Nicolas II Romanov_Y 48 0 48 6.2% -43.0
+Prince Fred_Y Alexei Romanov_Y 48 0 48 16.7% -28.0
+Prince Fred_Y Anastasia4 son_Y 48 0 48 20.8% -18.0
+Prince Fred_Y Farmers grandson_Y 41 7 48 25.0% -5.0
+Prince Fred_Y Grigori Rasputin_Y 48 0 48 33.3% 0.0
+Nicolas II Romanov_Y Alexei Romanov_Y 31 0 31 41.9% -12.0
+Nicolas II Romanov_Y Anastasia4 son_Y 48 0 48 8.3% -40.0
+Nicolas II Romanov_Y Farmers grandson_Y 41 4 45 13.3% -27.0
+Nicolas II Romanov_Y Grigori Rasputin_Y 48 0 48 16.7% -28.0
+Alexei Romanov_Y Anastasia4 son_Y 48 0 48 8.3% -40.0
+Alexei Romanov_Y Farmers grandson_Y 41 4 45 22.2% -15.0
+Alexei Romanov_Y Grigori Rasputin_Y 48 0 48 27.1% -13.0
+Anastasia4 son_Y Farmers grandson_Y 41 7 48 16.7% -17.0
+Anastasia4 son_Y Grigori Rasputin_Y 48 0 48 20.8% -18.0
+Farmers grandson_Y Grigori Rasputin_Y 41 7 48 75.0% 67.0

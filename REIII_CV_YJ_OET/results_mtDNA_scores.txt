@@ -1,0 +1,121 @@
+SampleA | SampleB | Comparable nucleotides | uncertain nucleotides | Total nucleotides | IdentityScore | Score
+Princess Irene_mtDNA Prince Fred_mtDNA 22 4 26 76.9% 38.0
+Princess Irene_mtDNA Nicolas II Romanov_mtDNA 24 0 24 8.3% -26.0
+Princess Irene_mtDNA Alexandra Romanov_mtDNA 22 2 24 41.7% 0.0
+Princess Irene_mtDNA Olga Romanov_mtDNA 21 4 25 56.0% 17.0
+Princess Irene_mtDNA Tatiana Romanov_mtDNA 24 0 24 20.8% -13.0
+Princess Irene_mtDNA Maria Romanov_mtDNA 20 4 24 70.8% 27.0
+Princess Irene_mtDNA Alexei Romanov_mtDNA 23 1 24 66.7% 21.0
+Princess Irene_mtDNA Suspected body of Anastasia Romanov_mtDNA 19 7 26 50.0% 20.0
+Princess Irene_mtDNA Anastasia1_mtDNA 18 8 26 38.5% 12.0
+Princess Irene_mtDNA Anastasia2_mtDNA 15 10 25 36.0% 12.0
+Princess Irene_mtDNA Anastasia3_mtDNA 17 7 24 50.0% 19.0
+Princess Irene_mtDNA Anastasia4 son_mtDNA 21 5 26 53.8% 21.0
+Princess Irene_mtDNA Anastasia5_mtDNA 19 7 26 38.5% 7.0
+Princess Irene_mtDNA Farmers grandson_mtDNA 18 7 25 40.0% 12.0
+Princess Irene_mtDNA Grigori Rasputin_mtDNA 24 2 26 15.4% -12.0
+Prince Fred_mtDNA Nicolas II Romanov_mtDNA 24 2 26 3.8% -29.0
+Prince Fred_mtDNA Alexandra Romanov_mtDNA 22 2 24 37.5% -3.0
+Prince Fred_mtDNA Olga Romanov_mtDNA 21 3 24 70.8% 26.0
+Prince Fred_mtDNA Tatiana Romanov_mtDNA 24 0 24 29.2% -11.0
+Prince Fred_mtDNA Maria Romanov_mtDNA 20 6 26 50.0% 11.0
+Prince Fred_mtDNA Alexei Romanov_mtDNA 21 5 26 46.2% 11.0
+Prince Fred_mtDNA Suspected body of Anastasia Romanov_mtDNA 19 7 26 46.2% 17.0
+Prince Fred_mtDNA Anastasia1_mtDNA 18 8 26 34.6% 9.0
+Prince Fred_mtDNA Anastasia2_mtDNA 15 10 25 44.0% 18.0
+Prince Fred_mtDNA Anastasia3_mtDNA 15 11 26 30.8% 9.0
+Prince Fred_mtDNA Anastasia4 son_mtDNA 21 5 26 50.0% 18.0
+Prince Fred_mtDNA Anastasia5_mtDNA 19 7 26 38.5% 7.0
+Prince Fred_mtDNA Farmers grandson_mtDNA 18 7 25 48.0% 18.0
+Prince Fred_mtDNA Grigori Rasputin_mtDNA 24 2 26 15.4% -12.0
+Nicolas II Romanov_mtDNA Alexandra Romanov_mtDNA 14 0 14 7.1% -35.0
+Nicolas II Romanov_mtDNA Olga Romanov_mtDNA 21 2 23 4.3% -34.0
+Nicolas II Romanov_mtDNA Tatiana Romanov_mtDNA 14 0 14 0.0% -34
+Nicolas II Romanov_mtDNA Maria Romanov_mtDNA 17 0 17 11.8% -27.0
+Nicolas II Romanov_mtDNA Alexei Romanov_mtDNA 22 1 23 4.3% -31.0
+Nicolas II Romanov_mtDNA Suspected body of Anastasia Romanov_mtDNA 21 2 23 4.3% -26.0
+Nicolas II Romanov_mtDNA Anastasia1_mtDNA 20 0 20 15.0% -31.0
+Nicolas II Romanov_mtDNA Anastasia2_mtDNA 16 4 20 10.0% -26.0
+Nicolas II Romanov_mtDNA Anastasia3_mtDNA 17 1 18 5.6% -26.0
+Nicolas II Romanov_mtDNA Anastasia4 son_mtDNA 23 2 25 4.0% -28.0
+Nicolas II Romanov_mtDNA Anastasia5_mtDNA 18 0 18 5.6% -23.0
+Nicolas II Romanov_mtDNA Farmers grandson_mtDNA 19 4 23 8.7% -33.0
+Nicolas II Romanov_mtDNA Grigori Rasputin_mtDNA 26 0 26 15.4% -18.0
+Alexandra Romanov_mtDNA Olga Romanov_mtDNA 18 2 20 35.0% -5.0
+Alexandra Romanov_mtDNA Tatiana Romanov_mtDNA 12 1 13 30.8% -16.0
+Alexandra Romanov_mtDNA Maria Romanov_mtDNA 18 2 20 35.0% -21.0
+Alexandra Romanov_mtDNA Alexei Romanov_mtDNA 21 3 24 16.7% -17.0
+Alexandra Romanov_mtDNA Suspected body of Anastasia Romanov_mtDNA 19 6 25 24.0% -9.0
+Alexandra Romanov_mtDNA Anastasia1_mtDNA 20 1 21 33.3% -11.0
+Alexandra Romanov_mtDNA Anastasia2_mtDNA 14 7 21 14.3% -21.0
+Alexandra Romanov_mtDNA Anastasia3_mtDNA 16 3 19 31.6% -10.0
+Alexandra Romanov_mtDNA Anastasia4 son_mtDNA 21 4 25 32.0% -5.0
+Alexandra Romanov_mtDNA Anastasia5_mtDNA 19 4 23 17.4% -23.0
+Alexandra Romanov_mtDNA Farmers grandson_mtDNA 17 6 23 13.0% -28.0
+Alexandra Romanov_mtDNA Grigori Rasputin_mtDNA 24 2 26 7.7% -22.0
+Olga Romanov_mtDNA Tatiana Romanov_mtDNA 17 0 17 41.2% -12.0
+Olga Romanov_mtDNA Maria Romanov_mtDNA 18 7 25 28.0% -13.0
+Olga Romanov_mtDNA Alexei Romanov_mtDNA 19 3 22 40.9% 0.0
+Olga Romanov_mtDNA Suspected body of Anastasia Romanov_mtDNA 17 8 25 32.0% -1.0
+Olga Romanov_mtDNA Anastasia1_mtDNA 17 8 25 32.0% -1.0
+Olga Romanov_mtDNA Anastasia2_mtDNA 15 6 21 42.9% 8.0
+Olga Romanov_mtDNA Anastasia3_mtDNA 16 6 22 22.7% -9.0
+Olga Romanov_mtDNA Anastasia4 son_mtDNA 19 6 25 36.0% 0.0
+Olga Romanov_mtDNA Anastasia5_mtDNA 17 9 26 23.1% -11.0
+Olga Romanov_mtDNA Farmers grandson_mtDNA 18 3 21 47.6% 8.0
+Olga Romanov_mtDNA Grigori Rasputin_mtDNA 22 4 26 7.7% -20.0
+Tatiana Romanov_mtDNA Maria Romanov_mtDNA 20 1 21 4.8% -29.0
+Tatiana Romanov_mtDNA Alexei Romanov_mtDNA 19 0 19 10.5% -21.0
+Tatiana Romanov_mtDNA Suspected body of Anastasia Romanov_mtDNA 21 2 23 13.0% -20.0
+Tatiana Romanov_mtDNA Anastasia1_mtDNA 20 1 21 19.0% -20.0
+Tatiana Romanov_mtDNA Anastasia2_mtDNA 16 1 17 23.5% -20.0
+Tatiana Romanov_mtDNA Anastasia3_mtDNA 17 1 18 11.1% -23.0
+Tatiana Romanov_mtDNA Anastasia4 son_mtDNA 23 0 23 21.7% -16.0
+Tatiana Romanov_mtDNA Anastasia5_mtDNA 21 4 25 0.0% -29
+Tatiana Romanov_mtDNA Farmers grandson_mtDNA 19 1 20 20.0% -27.0
+Tatiana Romanov_mtDNA Grigori Rasputin_mtDNA 26 0 26 3.8% -27.0
+Maria Romanov_mtDNA Alexei Romanov_mtDNA 19 5 24 50.0% 9.0
+Maria Romanov_mtDNA Suspected body of Anastasia Romanov_mtDNA 17 9 26 30.8% -1.0
+Maria Romanov_mtDNA Anastasia1_mtDNA 19 3 22 31.8% -10.0
+Maria Romanov_mtDNA Anastasia2_mtDNA 15 7 22 31.8% -2.0
+Maria Romanov_mtDNA Anastasia3_mtDNA 16 5 21 47.6% 10.0
+Maria Romanov_mtDNA Anastasia4 son_mtDNA 19 7 26 34.6% 0.0
+Maria Romanov_mtDNA Anastasia5_mtDNA 16 5 21 38.1% 4.0
+Maria Romanov_mtDNA Farmers grandson_mtDNA 17 6 23 30.4% -4.0
+Maria Romanov_mtDNA Grigori Rasputin_mtDNA 22 4 26 11.5% -21.0
+Alexei Romanov_mtDNA Suspected body of Anastasia Romanov_mtDNA 18 6 24 33.3% 2.0
+Alexei Romanov_mtDNA Anastasia1_mtDNA 17 9 26 26.9% 0.0
+Alexei Romanov_mtDNA Anastasia2_mtDNA 15 6 21 33.3% 2.0
+Alexei Romanov_mtDNA Anastasia3_mtDNA 17 6 23 43.5% 9.0
+Alexei Romanov_mtDNA Anastasia4 son_mtDNA 20 4 24 37.5% 3.0
+Alexei Romanov_mtDNA Anastasia5_mtDNA 18 8 26 30.8% 2.0
+Alexei Romanov_mtDNA Farmers grandson_mtDNA 18 4 22 36.4% -2.0
+Alexei Romanov_mtDNA Grigori Rasputin_mtDNA 23 3 26 19.2% -12.0
+Suspected body of Anastasia Romanov_mtDNA Anastasia1_mtDNA 15 11 26 23.1% 3.0
+Suspected body of Anastasia Romanov_mtDNA Anastasia2_mtDNA 12 13 25 20.0% 3.0
+Suspected body of Anastasia Romanov_mtDNA Anastasia3_mtDNA 12 14 26 23.1% 6.0
+Suspected body of Anastasia Romanov_mtDNA Anastasia4 son_mtDNA 21 2 23 78.3% 33.0
+Suspected body of Anastasia Romanov_mtDNA Anastasia5_mtDNA 18 6 24 62.5% 23.0
+Suspected body of Anastasia Romanov_mtDNA Farmers grandson_mtDNA 15 10 25 24.0% 3.0
+Suspected body of Anastasia Romanov_mtDNA Grigori Rasputin_mtDNA 21 5 26 11.5% -12.0
+Anastasia1_mtDNA Anastasia2_mtDNA 12 12 24 33.3% 12.0
+Anastasia1_mtDNA Anastasia3_mtDNA 14 9 23 21.7% 1.0
+Anastasia1_mtDNA Anastasia4 son_mtDNA 17 9 26 30.8% 7.0
+Anastasia1_mtDNA Anastasia5_mtDNA 16 8 24 20.8% -9.0
+Anastasia1_mtDNA Farmers grandson_mtDNA 14 11 25 36.0% 13.0
+Anastasia1_mtDNA Grigori Rasputin_mtDNA 20 6 26 11.5% -11.0
+Anastasia2_mtDNA Anastasia3_mtDNA 12 9 21 19.0% 0.0
+Anastasia2_mtDNA Anastasia4 son_mtDNA 14 11 25 24.0% 4.0
+Anastasia2_mtDNA Anastasia5_mtDNA 13 11 24 20.8% -2.0
+Anastasia2_mtDNA Farmers grandson_mtDNA 16 3 19 73.7% 26.0
+Anastasia2_mtDNA Grigori Rasputin_mtDNA 16 10 26 11.5% -7.0
+Anastasia3_mtDNA Anastasia4 son_mtDNA 14 12 26 26.9% 7.0
+Anastasia3_mtDNA Anastasia5_mtDNA 14 10 24 16.7% -6.0
+Anastasia3_mtDNA Farmers grandson_mtDNA 14 8 22 22.7% 1.0
+Anastasia3_mtDNA Grigori Rasputin_mtDNA 17 9 26 23.1% 1.0
+Anastasia4 son_mtDNA Anastasia5_mtDNA 18 8 26 53.8% 20.0
+Anastasia4 son_mtDNA Farmers grandson_mtDNA 17 8 25 28.0% 4.0
+Anastasia4 son_mtDNA Grigori Rasputin_mtDNA 23 3 26 19.2% -8.0
+Anastasia5_mtDNA Farmers grandson_mtDNA 15 10 25 24.0% -1.0
+Anastasia5_mtDNA Grigori Rasputin_mtDNA 21 5 26 15.4% -13.0
+Farmers grandson_mtDNA Grigori Rasputin_mtDNA 19 7 26 23.1% -1.0

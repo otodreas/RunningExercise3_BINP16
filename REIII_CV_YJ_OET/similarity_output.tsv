@@ -1,0 +1,121 @@
+SampleA	SampleB	IdentityScore
+Princess Irene	Prince Fred	76.9%
+Princess Irene	Nicolas II Romanov	8.3%
+Princess Irene	Alexandra Romanov	41.7%
+Princess Irene	Olga Romanov	56.0%
+Princess Irene	Tatiana Romanov	20.8%
+Princess Irene	Maria Romanov	70.8%
+Princess Irene	Alexei Romanov	66.7%
+Princess Irene	Suspected body of Anastasia Romanov	50.0%
+Princess Irene	Anastasia1	38.5%
+Princess Irene	Anastasia2	36.0%
+Princess Irene	Anastasia3	50.0%
+Princess Irene	Anastasia4 son	53.8%
+Princess Irene	Anastasia5	38.5%
+Princess Irene	Farmers grandson	40.0%
+Princess Irene	Grigori Rasputin	15.4%
+Prince Fred	Nicolas II Romanov	3.8%
+Prince Fred	Alexandra Romanov	37.5%
+Prince Fred	Olga Romanov	70.8%
+Prince Fred	Tatiana Romanov	29.2%
+Prince Fred	Maria Romanov	50.0%
+Prince Fred	Alexei Romanov	46.2%
+Prince Fred	Suspected body of Anastasia Romanov	46.2%
+Prince Fred	Anastasia1	34.6%
+Prince Fred	Anastasia2	44.0%
+Prince Fred	Anastasia3	30.8%
+Prince Fred	Anastasia4 son	50.0%
+Prince Fred	Anastasia5	38.5%
+Prince Fred	Farmers grandson	48.0%
+Prince Fred	Grigori Rasputin	15.4%
+Nicolas II Romanov	Alexandra Romanov	7.1%
+Nicolas II Romanov	Olga Romanov	4.3%
+Nicolas II Romanov	Tatiana Romanov	0.0%
+Nicolas II Romanov	Maria Romanov	11.8%
+Nicolas II Romanov	Alexei Romanov	4.3%
+Nicolas II Romanov	Suspected body of Anastasia Romanov	4.3%
+Nicolas II Romanov	Anastasia1	15.0%
+Nicolas II Romanov	Anastasia2	10.0%
+Nicolas II Romanov	Anastasia3	5.6%
+Nicolas II Romanov	Anastasia4 son	4.0%
+Nicolas II Romanov	Anastasia5	5.6%
+Nicolas II Romanov	Farmers grandson	8.7%
+Nicolas II Romanov	Grigori Rasputin	15.4%
+Alexandra Romanov	Olga Romanov	35.0%
+Alexandra Romanov	Tatiana Romanov	30.8%
+Alexandra Romanov	Maria Romanov	35.0%
+Alexandra Romanov	Alexei Romanov	16.7%
+Alexandra Romanov	Suspected body of Anastasia Romanov	24.0%
+Alexandra Romanov	Anastasia1	33.3%
+Alexandra Romanov	Anastasia2	14.3%
+Alexandra Romanov	Anastasia3	31.6%
+Alexandra Romanov	Anastasia4 son	32.0%
+Alexandra Romanov	Anastasia5	17.4%
+Alexandra Romanov	Farmers grandson	13.0%
+Alexandra Romanov	Grigori Rasputin	7.7%
+Olga Romanov	Tatiana Romanov	41.2%
+Olga Romanov	Maria Romanov	28.0%
+Olga Romanov	Alexei Romanov	40.9%
+Olga Romanov	Suspected body of Anastasia Romanov	32.0%
+Olga Romanov	Anastasia1	32.0%
+Olga Romanov	Anastasia2	42.9%
+Olga Romanov	Anastasia3	22.7%
+Olga Romanov	Anastasia4 son	36.0%
+Olga Romanov	Anastasia5	23.1%
+Olga Romanov	Farmers grandson	47.6%
+Olga Romanov	Grigori Rasputin	7.7%
+Tatiana Romanov	Maria Romanov	4.8%
+Tatiana Romanov	Alexei Romanov	10.5%
+Tatiana Romanov	Suspected body of Anastasia Romanov	13.0%
+Tatiana Romanov	Anastasia1	19.0%
+Tatiana Romanov	Anastasia2	23.5%
+Tatiana Romanov	Anastasia3	11.1%
+Tatiana Romanov	Anastasia4 son	21.7%
+Tatiana Romanov	Anastasia5	0.0%
+Tatiana Romanov	Farmers grandson	20.0%
+Tatiana Romanov	Grigori Rasputin	3.8%
+Maria Romanov	Alexei Romanov	50.0%
+Maria Romanov	Suspected body of Anastasia Romanov	30.8%
+Maria Romanov	Anastasia1	31.8%
+Maria Romanov	Anastasia2	31.8%
+Maria Romanov	Anastasia3	47.6%
+Maria Romanov	Anastasia4 son	34.6%
+Maria Romanov	Anastasia5	38.1%
+Maria Romanov	Farmers grandson	30.4%
+Maria Romanov	Grigori Rasputin	11.5%
+Alexei Romanov	Suspected body of Anastasia Romanov	33.3%
+Alexei Romanov	Anastasia1	26.9%
+Alexei Romanov	Anastasia2	33.3%
+Alexei Romanov	Anastasia3	43.5%
+Alexei Romanov	Anastasia4 son	37.5%
+Alexei Romanov	Anastasia5	30.8%
+Alexei Romanov	Farmers grandson	36.4%
+Alexei Romanov	Grigori Rasputin	19.2%
+Suspected body of Anastasia Romanov	Anastasia1	23.1%
+Suspected body of Anastasia Romanov	Anastasia2	20.0%
+Suspected body of Anastasia Romanov	Anastasia3	23.1%
+Suspected body of Anastasia Romanov	Anastasia4 son	78.3%
+Suspected body of Anastasia Romanov	Anastasia5	62.5%
+Suspected body of Anastasia Romanov	Farmers grandson	24.0%
+Suspected body of Anastasia Romanov	Grigori Rasputin	11.5%
+Anastasia1	Anastasia2	33.3%
+Anastasia1	Anastasia3	21.7%
+Anastasia1	Anastasia4 son	30.8%
+Anastasia1	Anastasia5	20.8%
+Anastasia1	Farmers grandson	36.0%
+Anastasia1	Grigori Rasputin	11.5%
+Anastasia2	Anastasia3	19.0%
+Anastasia2	Anastasia4 son	24.0%
+Anastasia2	Anastasia5	20.8%
+Anastasia2	Farmers grandson	73.7%
+Anastasia2	Grigori Rasputin	11.5%
+Anastasia3	Anastasia4 son	26.9%
+Anastasia3	Anastasia5	16.7%
+Anastasia3	Farmers grandson	22.7%
+Anastasia3	Grigori Rasputin	23.1%
+Anastasia4 son	Anastasia5	53.8%
+Anastasia4 son	Farmers grandson	28.0%
+Anastasia4 son	Grigori Rasputin	19.2%
+Anastasia5	Farmers grandson	24.0%
+Anastasia5	Grigori Rasputin	15.4%
+Farmers grandson	Grigori Rasputin	23.1%
